@@ -127,6 +127,10 @@ class Video extends React.Component {
   leaveChat = () => {
     this.state.localStream.getVideoTracks()[0].enabled = !(this.state.localStream.getVideoTracks()[0].enabled);
     this.props.history.push('/')
+    socket.on('disconnected', () => {
+      this.setState({ initiator: true })
+      this.state.localStream.getVideoTracks()[0].enabled = !(this.state.localStream.getVideoTracks()[0].enabled);
+    })
   }
 
   openChat = () => {

@@ -10,7 +10,7 @@
 }
 .video-wrapper {
   height: 100vh;
-  background: #252839;
+  background: #1e4122;
   width: 100%;
 }
 #remoteVideo {
@@ -58,7 +58,7 @@
   border: none;
   box-shadow: 1px 1px 8px black;
   border-radius: 50%;
-  background-color: #252839;
+  background-color: #1e4122;
   height: 64px;
   width: 64px;
 }
@@ -72,7 +72,7 @@
   border: none;
   box-shadow: 1px 1px 8px black;
   border-radius: 35%;
-  background-color: #252839;
+  background-color: #1e4122;
   height: 64px;
   width: 64px;
 }
@@ -100,7 +100,7 @@
   border: none;
   box-shadow: 1px 1px 8px black;
   border-radius: 35%;
-  background-color: #252839;
+  background-color: #1e4122;
   height: 64px;
   width: 64px;
 }
@@ -128,7 +128,7 @@
   border: none;
   box-shadow: 1px 1px 8px black;
   border-radius: 35%;
-  background-color: #252839;
+  background-color: #1e4122;
   height: 64px;
   width: 64px;
 }
@@ -142,7 +142,7 @@
   border: none;
   box-shadow: 1px 1px 8px black;
   border-radius: 35%;
-  background-color: #252839;
+  background-color: #1e4122;
   height: 64px;
   width: 64px;
 }
@@ -156,7 +156,7 @@
   border: none;
   box-shadow: 1px 1px 8px black;
   border-radius: 35%;
-  background-color: #252839;
+  background-color: #1e4122;
   height: 64px;
   width: 64px;
 }
@@ -227,7 +227,7 @@
   bottom: 24px;
   width: 600px;
   margin: 30px auto;
-  border: 1px solid #252839;
+  border: 1px solid #1e4122;
   box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
   border-radius: 20px;
 }
@@ -254,7 +254,7 @@
 }
 
 #output strong{
-  color: #252839;
+  color: #1e4122;
 }
 
 .sendbutton{
@@ -286,7 +286,7 @@
   position: absolute;
   height: 100px;
   width: 100%;
-  background-color: #252839;
+  background-color: #1e4122;
   bottom: 0;
 }
 
