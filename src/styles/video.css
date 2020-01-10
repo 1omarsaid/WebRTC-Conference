@@ -1,0 +1,311 @@
+.local-video-wrapper {
+  display: flex;
+}
+#localVideo {
+  height: 212px;
+  right: 0;
+  margin: 24px auto;
+  display: inline-block;
+  border-radius: 4px;
+}
+.video-wrapper {
+  height: 100vh;
+  background: #252839;
+  width: 100%;
+}
+#remoteVideo {
+  background: transparent;
+  margin: 0 auto;
+  display: block;
+  
+  max-width: 100vw;
+  height: 90%;
+}
+#remoteVideo.hide {
+  display: none;
+}
+.video-wrapper .status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: greenyellow;
+  height: 100vh;
+}
+
+.local-video-user-name{
+  position: absolute;
+  top: 190px;
+  left: 35px;
+  display: flex;
+  background: rgb(124, 113, 111);
+  opacity: 0.5;
+  outline: none;
+  border-radius: 5px;
+  height: 33px;
+  width: 80px;
+  color: white;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.share-screen-btn{
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  background: transparent;
+  outline: none;
+  border: none;
+  box-shadow: 1px 1px 8px black;
+  border-radius: 50%;
+  background-color: #252839;
+  height: 64px;
+  width: 64px;
+}
+
+.mute-video-btn{
+  position: absolute;
+  bottom: 24px;
+  left: 100px;
+  background: transparent;
+  outline: none;
+  border: none;
+  box-shadow: 1px 1px 8px black;
+  border-radius: 35%;
+  background-color: #252839;
+  height: 64px;
+  width: 64px;
+}
+
+.mute-video-btn-red{
+  position: absolute;
+  bottom: 24px;
+  left: 100px;
+  background: transparent;
+  outline: none;
+  border: none;
+  box-shadow: 1px 1px 8px black;
+  border-radius: 35%;
+  background-color: rgb(187, 52, 18);
+  height: 64px;
+  width: 64px;
+}
+
+.mute-Audio-btn{
+  position: absolute;
+  bottom: 24px;
+  left: 180px;
+  background: transparent;
+  outline: none;
+  border: none;
+  box-shadow: 1px 1px 8px black;
+  border-radius: 35%;
+  background-color: #252839;
+  height: 64px;
+  width: 64px;
+}
+
+.mute-Audio-btn-red{
+  position: absolute;
+  bottom: 24px;
+  left: 180px;
+  background: transparent;
+  outline: none;
+  border: none;
+  box-shadow: 1px 1px 8px black;
+  border-radius: 35%;
+  background-color:rgb(187, 52, 18);
+  height: 64px;
+  width: 64px;
+}
+
+.leave-button{
+  position: absolute;
+  bottom: 24px;
+  left: 260px;
+  background: transparent;
+  outline: none;
+  border: none;
+  box-shadow: 1px 1px 8px black;
+  border-radius: 35%;
+  background-color: #252839;
+  height: 64px;
+  width: 64px;
+}
+
+.chat-btn{
+  position: absolute;
+  bottom: 24px;
+  left: 340px;
+  background: transparent;
+  outline: none;
+  border: none;
+  box-shadow: 1px 1px 8px black;
+  border-radius: 35%;
+  background-color: #252839;
+  height: 64px;
+  width: 64px;
+}
+
+.apply-filter-button{
+  position: absolute;
+  bottom: 24px;
+  left: 410px;
+  background: transparent;
+  outline: none;
+  border: none;
+  box-shadow: 1px 1px 8px black;
+  border-radius: 35%;
+  background-color: #252839;
+  height: 64px;
+  width: 64px;
+}
+
+.members{
+  position: absolute;
+  bottom: 20px;
+  left: 420px;
+  background: transparent;
+  outline: none;
+  /* border: solid 5px white; */
+  border-radius: 25px;
+  height: 64px;
+  width: 150px;
+  color: white;
+  text-align: center
+}
+
+.video-mute-logo{
+  position: absolute;
+  top: 15px;
+  left: 35px;
+  display: flex;
+  background: rgb(187, 52, 18);
+  outline: none;
+  border-radius: 5px;
+  height: 40px;
+  width: 40px;
+  color: white;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 480px) {
+  .video-wrapper {
+    position: relative;
+    max-width: 100vw;
+  }
+  #localVideo {
+    height: 80px;
+  }
+  #remoteVideo {
+    width: 100%;
+    height: auto;
+    margin-top: 20%;
+  }
+}
+@media screen and (orientation: landscape) {
+  #localVideo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: 0px;
+    margin-top: 0px;
+  }
+}
+@media screen and (min-width: 768px) {
+  #localVideo {
+    margin-left: 32px;
+    margin-top: 12px;
+  }
+}
+
+#mario-chat{
+  position: absolute;
+  right: 0;
+  bottom: 24px;
+  width: 600px;
+  margin: 30px auto;
+  border: 1px solid #252839;
+  box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
+  border-radius: 20px;
+}
+
+#chat-window{
+  height: 200px;
+  overflow: auto;
+  background: #f9f9f9;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
+#output p{
+  padding: 14px 0px;
+  margin: 0 20px;
+  border-bottom: 1px solid #e9e9e9;
+  color: #555;
+}
+
+#feedback p{
+  color: #aaa;
+  padding: 14px 0px;
+  margin: 0 20px;
+}
+
+#output strong{
+  color: #252839;
+}
+
+.sendbutton{
+  background: #363a50;
+  color: #fff;
+  font-size: 18px;
+  border: 0;
+  padding: 0 0;
+  width: 100%;
+  height: 50px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.input{
+  padding: 10px 20px;
+  box-sizing: border-box;
+  background: #eee;
+  border: 0;
+  display: block;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  font-family: Nunito;
+  font-size: 16px;
+}
+
+.lower-banner{
+  position: absolute;
+  height: 100px;
+  width: 100%;
+  background-color: #252839;
+  bottom: 0;
+}
+
+.select{
+  position: absolute;
+  bottom: 20px;
+  left: 820px;
+  background: transparent;
+  outline: none;
+  border-radius: 25px;
+  height: 64px;
+  width: 150px;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  margin: 0 0 1em 0;
+}
+
+label {
+  width: 12em;
+  display: inline-block;
+}
