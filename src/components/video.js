@@ -2,17 +2,16 @@ import React from 'react'
 import VideoCall from '../helpers/simple-peer'
 import '../styles/video.css'
 import io from 'socket.io-client'
-
+import ReactDOM from "react-dom";
 import ShareScreenIcon from './icons/ShareScreenIcon';
 import AudioIcon from './icons/AudioIcon';
 import AudioMuteIcon from './icons/AudioMuteIcon';
 import VideoMuteIcon from './icons/VideoMuteIcon';
 import VideoIcon from './icons/VideoIcon';
 import LeaveChatIcon from './icons/LeaveChatIcon';
-import ChatIcon from './icons/ChatIcon'
+import Select from 'react-select';
 
 var socket;
-var messages;
 class Video extends React.Component {
   constructor() {
     super()
@@ -29,22 +28,26 @@ class Video extends React.Component {
       data: [],
       viewChat: false,
       leaveChat: false,
-      message: null,
-      handle: null,
+      audioInputOptions: [],
+      audioOutputOptions: [],
+      videoSourceOptions: [],
+      audioSource:'default',
+      audioConfigRecieved: false
     }
-    var myStream;
     
   }
   
   videoCall = new VideoCall()
   componentDidMount() {
+
     socket = io("http://localhost:8080")
-    messages = []
     const component = this
     this.setState({ socket })
     const { roomId } = this.props.match.params
-    this.getUserMedia().then(() => {
+    navigator.mediaDevices.enumerateDevices().then(input => this.gotDevices(input)).catch(this.handleError);
+    this.getUserMedia(this.state.audioSource).then(() => {
       socket.emit('join', { roomId: roomId })
+      console.log("recived permission")
     })
     
     socket.on('init', () => {
@@ -66,13 +69,16 @@ class Video extends React.Component {
     socket.on('full', () => {
       component.setState({ full: true })
     })
-
-    socket.on('chat', function(data){
-      messages.concat(data)
-    });
   }
 
-  getUserMedia(cb) {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.audioSource !== this.state.audioSource) {
+      this.getUserMedia(this.state.audioSource)
+    }
+    
+  }
+
+  getUserMedia = (audioInput) => {
     return new Promise((resolve, reject) => {
       // This is for the different browsers
       navigator.getUserMedia = navigator.getUserMedia =
@@ -80,13 +86,16 @@ class Video extends React.Component {
         navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia
       // Setting up constraints
+      
+      console.log(audioInput)
       const constraints = {
         video: {
           width: { min: 160, ideal: 640, max: 1280 },
           height: { min: 120, ideal: 360, max: 720 }
         },
-        audio: true
+        audio: {deviceId: audioInput}
       }
+      
       navigator.getUserMedia(
         constraints,
         stream => {
@@ -96,6 +105,7 @@ class Video extends React.Component {
         },
         () => {}
       )
+      console.log(constraints.audio)
     })
   }
 
@@ -133,20 +143,53 @@ class Video extends React.Component {
     })
   }
 
-  openChat = () => {
-    this.setState({viewChat: !this.state.viewChat})
-    console.log(this.state.viewChat)
-  }
-
-  sendMessage = (handle, message) => {
-    socket.emit('chat', {
-      message: message,
-      handle: handle
+  gotDevices(deviceInfos) {
+    const document = ReactDOM.findDOMNode(this);
+    const videoElement = document.querySelector('video');
+    const audioInputSelect = document.querySelector('select#audioSource');
+    const audioOutputSelect = document.querySelector('select#audioOutput');
+    const videoSelect = document.querySelector('select#videoSource');
+    const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
+    const values = selectors.map(select => select.value);
+    selectors.forEach(select => {
+      while (select.firstChild) {
+        select.removeChild(select.firstChild);
+      }
     });
+    
 
-    this.setState({ message: '', handle: ''});
-    console.log(messages);
+    for (let i = 0; i < deviceInfos.length; i++) {
+      var deviceInfo = deviceInfos[i];
+      if (deviceInfo.kind === 'audioinput') {
+        this.state.audioInputOptions.push(<option key={i} value={deviceInfo.deviceId}>{deviceInfo.label}</option>)
+      } else if (deviceInfo.kind === 'audiooutput') {
+        this.state.audioOutputOptions.push(<option key={i} value={deviceInfo.deviceId}>{deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`}</option>)
+      } else if (deviceInfo.kind === 'videoinput') {
+        this.state.videoSourceOptions.push(<option key={i} value={deviceInfo.deviceId}>{deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`}</option>)
+      } else {
+        console.log('Some other kind of source/device: ', deviceInfo);
+      }
+    }
+
+    selectors.forEach((select, selectorIndex) => {
+      if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
+        select.value = values[selectorIndex];
+      }
+    });
   }
+
+  handleError(){
+
+  }
+
+  onChangeAudio = ({target}) => {
+    this.setState({
+      audioSource: target.value
+    })
+    // this.getUserMedia(this.state.audioSource)
+    console.log(this.state.audioSource)
+  }
+
 
   enter = roomId => {
     this.setState({ connecting: true })
@@ -181,7 +224,6 @@ class Video extends React.Component {
 
 
   render() {
-    const { data } = this.state;
     return (
       <div className="video-wrapper">
         <div className="local-video-wrapper" >
@@ -200,7 +242,6 @@ class Video extends React.Component {
             <div className="local-video-user-name">
               <p>User(you)</p>
             </div>
-            
         }
           
         </div>
@@ -225,10 +266,6 @@ class Video extends React.Component {
             {this.state.audioMute ? <AudioMuteIcon/> : <AudioIcon/>}
           </button>
 
-          <button className="chat-btn" onClick={() => {this.openChat()}}>
-            <ChatIcon/>}
-          </button>
-
           <button className="leave-button" onClick={() => {this.leaveChat()}}>
             <LeaveChatIcon/> 
           </button>
@@ -236,38 +273,18 @@ class Video extends React.Component {
           <div className="members">
             <h2>Members: {this.state.waiting ? "1" : "2"}</h2>
           </div>
+        </div>
 
-          {this.state.viewChat ? 
-              <div id="mario-chat">
-              <div id="chat-window">
-                    <div id="output">
-                    {data.length <= 0
-                      ? ''
-                      : messages.map((message) => (
-                        <h3 className="message" key={data.message}>
-                          <span style={{ color: 'red' }}> id: </span> {message.handle} <br />
-                          <span style={{ color: 'red', paddingLeft: 10 }}> data: </span>
-                          {message.message}
-                        </h3>
-                  ))}
-                    </div>
-                    <div id="feedback"></div>
-              </div>
-              <input 
-                className="input" 
-                type="text" 
-                id="handle" 
-                onChange={(e) => this.setState({ handle: e.target.value })}
-                placeholder="Handle"/>
-              <input 
-                className="input" 
-                type="text" 
-                id="message"
-                onChange={(e) => this.setState({ textMessage: e.target.value })}
-                placeholder="Message"/>
-              <button className="sendbutton" id="send" onClick={() => this.sendMessage(this.state.handle, this.state.message)}>Send</button>
-              </div> : 
-          <div></div> }
+        <div className="configurations">
+          <div className="select">
+            <label htmlFor="audioSource">Audio input source: </label><select id="audioSource" onChange={this.onChangeAudio}>{this.state.audioInputOptions}</select>
+          </div>
+          <div className="select">
+            <label htmlFor="audioOutput">Audio output destination: </label><select id="audioOutput">{this.state.audioOutputOptions}</select>
+          </div>
+          <div className="select">
+            <label htmlFor="videoSource">Video source: </label><select id="videoSource">{this.state.videoSourceOptions}</select>
+          </div>
         </div>
         
         {this.state.connecting && (

@@ -164,7 +164,7 @@
 .members{
   position: absolute;
   bottom: 20px;
-  left: 420px;
+  left: 340px;
   background: transparent;
   outline: none;
   /* border: solid 5px white; */
@@ -221,53 +221,6 @@
   }
 }
 
-#mario-chat{
-  position: absolute;
-  right: 0;
-  bottom: 24px;
-  width: 600px;
-  margin: 30px auto;
-  border: 1px solid #1e4122;
-  box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
-  border-radius: 20px;
-}
-
-#chat-window{
-  height: 200px;
-  overflow: auto;
-  background: #f9f9f9;
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
-}
-
-#output p{
-  padding: 14px 0px;
-  margin: 0 20px;
-  border-bottom: 1px solid #e9e9e9;
-  color: #555;
-}
-
-#feedback p{
-  color: #aaa;
-  padding: 14px 0px;
-  margin: 0 20px;
-}
-
-#output strong{
-  color: #1e4122;
-}
-
-.sendbutton{
-  background: #363a50;
-  color: #fff;
-  font-size: 18px;
-  border: 0;
-  padding: 0 0;
-  width: 100%;
-  height: 50px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-}
 
 .input{
   padding: 10px 20px;
@@ -291,21 +244,24 @@
 }
 
 .select{
-  position: absolute;
-  bottom: 20px;
-  left: 820px;
-  background: transparent;
-  outline: none;
-  border-radius: 25px;
-  height: 64px;
-  width: 150px;
-  color: white;
-  text-align: center;
-  display: inline-block;
-  margin: 0 0 1em 0;
+  padding-right: 10px;
 }
 
-label {
-  width: 12em;
-  display: inline-block;
+
+.configurations {
+  position: absolute;
+  bottom: 20px;
+  left: 530px;
+  background: transparent;
+  outline: none;
+  /* border: solid 5px white; */
+  border-radius: 15px;
+  height: 64px;
+  width: auto;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center
 }
